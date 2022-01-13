@@ -1,5 +1,5 @@
-import { Constants } from './constants/constants';
-import { HttpClient } from '@angular/common/http';
+import { AppUser } from './models/app-user.model';
+import { HttpClientService } from './shared/http-client.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpClient) {}
-  ngOnInit(): void {
-    this.http.get(Constants.BASE_URL + 'users').subscribe((data) => {
+  appUsers: AppUser[];
+  constructor(private httpClientService: HttpClientService) {}
+  ngOnInit() {
+    this.httpClientService.getUsers().subscribe((data: AppUser[]) => {
       console.log(data);
-    });
+      this.appUsers = data;
+    },error => console.log(error));
   }
-
 }
+
