@@ -4,6 +4,8 @@ import { Register } from './../_models/register.model';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { User } from '../_models/user.model';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,8 +16,8 @@ export class RegisterComponent implements OnInit {
   registerModel: Register;
   showConfirmPasswordError =false;
   @ViewChild('registerForm', {static: true}) registerForm: NgForm;
-  @Output() cancelEvent: Subject<boolean> = new Subject();
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private toastr: ToastrService, private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -30,12 +32,15 @@ export class RegisterComponent implements OnInit {
     }
     this.accountService.register(new Register(username, password)).subscribe(data => {
       console.log(data);
-      this.onCancel();
-    }, error => console.log(error));
+      this.router.navigate(['/matches'], { relativeTo: this.route });
+    }, error => {
+      console.log(error);
+      this.toastr.error(error.error);
+    });
   }
 
   onCancel() {
-    this.cancelEvent.next(false);
+    this.router.navigate(['/home'], { relativeTo: this.route });
   }
 
 }
