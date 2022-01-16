@@ -24,9 +24,6 @@ export class NavComponent implements OnInit {
   login(loginForm: NgForm) {
     this.accountService.login(loginForm.value).subscribe((data: User) => {
       this.router.navigate(['/members'], { relativeTo: this.route });
-    },error => {
-      console.log(error.error);
-      this.toastr.error(error.error)
     });
   }
 

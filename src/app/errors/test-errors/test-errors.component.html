@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md12">
+    <button class="btn btn-outline-primary mr-3" (click)="get500Error()">Test 500 Error</button>
+    <button class="btn btn-outline-primary mr-3" (click)="get400Error()">Test 400 Error</button>
+    <button class="btn btn-outline-primary mr-3" (click)="get401Error()">Test 401 Error</button>
+    <button class="btn btn-outline-primary mr-3" (click)="get404Error()">Test 404 Error</button>
+    <button class="btn btn-outline-primary mr-3" (click)="get400ValidationError()">Test 400 Validation Error</button>
+  </div>
+</div>
+<div class="row mt-3">
+  <div class="col-md-6 offset-md-3">
+    <ng-container *ngIf="validationErrors.length > 0">
+      <ul>
+        <li *ngFor="let validationError of validationErrors">
+          <p class="text-danger">{{ validationError }}</p>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>

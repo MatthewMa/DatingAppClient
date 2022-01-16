@@ -3,7 +3,7 @@
   <div class="form-group row mt-2">
     <label for="username" class="col-sm-2 col-form-label">User Name:</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="username" placeholder="User Name:" ngModel name="username" required #username="ngModel">
+      <input type="text" class="form-control" id="username" placeholder="User Name:" ngModel name="username" required #username="ngModel" maxlength="16" minlength="6">
     </div>
   </div>
   <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
@@ -11,10 +11,16 @@
       Please enter username
     </div>
   </div>
+  <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+    <div *ngIf="username.errors.maxlength || username.errors.minlength">
+      Username should be between 6 and 16 in length
+    </div>
+  </div>
   <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label">Password:</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" id="password" placeholder="Password:" ngModel name="password" required [pattern]="'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'" #password="ngModel">
+      <input type="password" class="form-control" id="password" placeholder="Password:" ngModel name="password" required
+      [pattern]="'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$'" #password="ngModel">
     </div>
   </div>
   <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
@@ -30,7 +36,7 @@
         <li>At least one lower case English letter</li>
         <li>At least one digit</li>
         <li>At least one special character</li>
-        <li>Minimum eight in length</li>
+        <li>Minimum eight in length and maximum is 16 in length</li>
       </ul>
     </div>
   </div>
