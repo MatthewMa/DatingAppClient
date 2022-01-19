@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     }
     this.accountService.register(new Register(username, password)).subscribe(data => {
       console.log(data);
-      this.router.navigate(['/matches'], { relativeTo: this.route });
+      this.router.navigate(['/members'], { relativeTo: this.route });
     }, error => {
       console.log(error);
       this.toastr.error(error.error);

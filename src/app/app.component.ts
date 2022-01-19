@@ -9,7 +9,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  appUsers: AppUser[];
   constructor(private accountService: AccountService) {}
   ngOnInit() {
     this.getUsers();
@@ -17,9 +16,7 @@ export class AppComponent implements OnInit {
   }
 
   private getUsers() {
-    this.accountService.getUsers().subscribe((data: AppUser[]) => {
-      this.appUsers = data;
-    }, error => console.log(error));
+
   }
 
   setCurrentUser() {
