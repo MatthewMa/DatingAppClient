@@ -20,8 +20,8 @@
           <p>{{currentMember.age}}</p>
         </div>
         <div>
-          <strong>Active:</strong>
-          <p>{{currentMember.lastActive | date:'yyyy/MM/dd'}}</p>
+          <strong>Last Active:</strong>
+          <p>{{currentMember.lastActive | timeago}}</p>
         </div>
         <div>
           <strong>Member Since:</strong>
@@ -56,7 +56,7 @@
         </form>
       </tab>
       <tab heading='Edit Photos'>
-        <p>Photo Edit</p>
+        <app-photo-editor [member]="currentMember"></app-photo-editor>
       </tab>
     </tabset>
   </div>

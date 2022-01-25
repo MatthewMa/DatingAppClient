@@ -11,14 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   constructor(private accountService: AccountService) {}
   ngOnInit() {
-    this.getUsers();
     this.setCurrentUser();
   }
-
-  private getUsers() {
-
-  }
-
   setCurrentUser() {
     const user: User = JSON.parse(localStorage.getItem('user'));
     this.accountService.setCurrentUser(user);

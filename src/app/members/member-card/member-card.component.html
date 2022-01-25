@@ -1,14 +1,14 @@
 <div class="card mb-4">
   <div class="card-img-wrapper">
-    <img src="{{ memberInput.photoUrl }}" alt="{{ memberInput.knownAs }}" class="card-img-top"/>
+    <img src="{{ memberInput.photoUrl ||  './assets/user.png' }}" alt="{{ memberInput.knownAs }}" class="card-img-top"/>
     <ul class="list-inline member-icons animate text-center mt-1">
-      <li class="list-inline-item" (click)="onMemberClick()"><button class="btn btn-primary"><i class="fa fa-user"></i></button></li>
-      <li class="list-inline-item"><button class="btn btn-primary"><i class="fa fa-heart"></i></button></li>
-      <li class="list-inline-item"><button class="btn btn-primary"><i class="fa fa-envelope"></i></button></li>
+      <li class="list-inline-item" (click)="onMemberClick()" data-toggle="tooltip" data-placement="top" title="Member Details"><button class="btn btn-primary"><i class="fa fa-user"></i></button></li>
+      <li class="list-inline-item"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Like"><i class="fa fa-heart"></i></button></li>
+      <li class="list-inline-item"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Send Email"><i class="fa fa-envelope"></i></button></li>
     </ul>
   </div>
-  <div class="card-body p-1">
-    <h6 class="card-tittle text-center mb-1"><i class="fa fa-user mr-2"></i>{{ memberInput.knownAs }}</h6>
+  <div class="card-body p-1 mt-2">
+    <h6 class="card-tittle text-center mb-1"><i class="fa fa-user mr-2"></i>{{ memberInput.knownAs }}, {{ memberInput.age }}</h6>
     <p class="card-text text-muted text-center">{{ memberInput.city }}</p>
   </div>
 </div>

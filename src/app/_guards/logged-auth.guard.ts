@@ -8,13 +8,12 @@ import { AccountService } from '../_services/account.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LoggedAuthGuard implements CanActivate {
   constructor(private accountService: AccountService, private toastr: ToastrService, private router: Router){}
   canActivate(): Observable<boolean> {
       return this.accountService.currentUser$.pipe(map(user => {
-        if (user) return true;
-        this.toastr.error('You should log in first.');
-        this.router.navigate(['/home']);
+        if (user === null) return true;
+        this.router.navigate(['/members']);
       }));
   }
 

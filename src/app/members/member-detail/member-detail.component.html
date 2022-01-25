@@ -12,8 +12,8 @@
           <p>{{currentMember.age}}</p>
         </div>
         <div>
-          <strong>Active:</strong>
-          <p>{{currentMember.lastActive | date:'yyyy/MM/dd'}}</p>
+          <strong>Last Active:</strong>
+          <p>{{currentMember.lastActive | timeago}}</p>
         </div>
         <div>
           <strong>Member Since:</strong>
@@ -31,13 +31,13 @@
   <div class="col-8">
     <tabset class="member-tabset">
       <tab heading='About {{ currentMember.knownAs }}'>
-        <h4>Description</h4>
+        <h4 *ngIf="currentMember.introduction">Description</h4>
         <p>{{ currentMember.introduction }}</p>
-        <h4>Looking For</h4>
+        <h4 *ngIf="currentMember.lookingFor">Looking For</h4>
         <p>{{ currentMember.lookingFor }}</p>
       </tab>
       <tab heading='Interests'>
-        <h4>Interests</h4>
+        <h4 *ngIf="currentMember.interests">Interests</h4>
         <p>{{ currentMember.interests }}</p>
       </tab>
       <tab heading='Photos'>

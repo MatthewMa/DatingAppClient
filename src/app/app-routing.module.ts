@@ -1,3 +1,4 @@
+import { LoggedAuthGuard } from './_guards/logged-auth.guard';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -13,8 +14,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate:[LoggedAuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate:[LoggedAuthGuard] },
   {
     path: '',
     runGuardsAndResolvers: 'always',

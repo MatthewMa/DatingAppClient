@@ -1,0 +1,31 @@
+<div class="form-group row">
+  <label for="{{label}}" class="col-sm-2 col-form-label">{{ label }}:</label>
+  <div class="col-sm-10">
+    <input [type]="type" class="form-control" id="{{label}}" placeholder="{{label}}"
+    required [class.is-invalid]="ngControl.invalid && ngControl.touched" [formControl]="ngControl.control" [class.is-valid]="ngControl.valid && ngControl.touched">
+    <div *ngIf="ngControl.invalid && (ngControl.dirty || ngControl.touched)" class="text-danger mt-1">
+      <div class="text-danger" *ngIf="ngControl.control.hasError('isMatching')">
+        Confirm password must match password
+      </div>
+      <div class="text-danger" *ngIf="ngControl.control.hasError('required')">
+        {{ label }} is required
+      </div>
+      <div class="text-danger" *ngIf="ngControl.control.hasError('minlength')">
+        The minimum length of {{ label }} should be {{ ngControl.control.errors.minlength['requiredLength'] }}
+      </div>
+      <div class="text-danger" *ngIf="ngControl.control.hasError('maxlength')">
+        The maximum length of {{ label }} should be {{ ngControl.control.errors.maxlength['requiredLength'] }}
+      </div>
+      <div class="text-danger" *ngIf="ngControl.control.hasError('pattern')">
+        <p>Password is not valid:</p>
+        <ul>
+          <li>At least one upper case English letter</li>
+          <li>At least one lower case English letter</li>
+          <li>At least one digit</li>
+          <li>At least one special character</li>
+          <li>Minimum eight in length and maximum is 16 in length</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,7 @@
-import { Observable, Subject } from 'rxjs';
 import { AccountService } from './../_services/account.service';
 import { Register } from './../_models/register.model';
-import { NgForm } from '@angular/forms';
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
-import { User } from '../_models/user.model';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,28 +12,47 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerModel: Register;
-  showConfirmPasswordError =false;
-  @ViewChild('registerForm', {static: true}) registerForm: NgForm;
+  // @ViewChild('registerForm', {static: true}) registerForm: NgForm;
+  registerForm: FormGroup;
+  maxDate: Date;
+  validationErrors: string[];
   constructor(private accountService: AccountService, private toastr: ToastrService, private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.initializeForm();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+  }
+
+  initializeForm() {
+    this.registerForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16),
+        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$')]],
+      passwordconfirm: ['', [Validators.required, this.matchValues('password')]],
+      gender: ['male'],
+      knownAs: ['',  [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      dateOfBirth: ['', [Validators.required]],
+      city: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
+      country: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
+    });
+    this.registerForm.controls.password.valueChanges.subscribe(() => {
+      this.registerForm.controls.passwordconfirm.updateValueAndValidity();
+    });
+  }
+
+  matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value === control?.parent?.controls[matchTo].value ? null : {isMatching: true}
+    }
   }
 
   register() {
-    const username = this.registerForm.value['username'];
-    const password = this.registerForm.value['password'];
-    const passwordConfirmed = this.registerForm.value['passwordconfirm'];
-    if (password !== passwordConfirmed) {
-      this.showConfirmPasswordError = true;
-      return;
-    }
-    this.accountService.register(new Register(username, password)).subscribe(data => {
-      console.log(data);
+    this.accountService.register(this.registerForm.value).subscribe(data => {
       this.router.navigate(['/members'], { relativeTo: this.route });
     }, error => {
-      console.log(error);
-      this.toastr.error(error.error);
+      this.validationErrors = error;
     });
   }
 

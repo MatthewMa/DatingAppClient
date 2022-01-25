@@ -1,0 +1,10 @@
+<div class="form-group row">
+  <label for="{{ label }}" class="col-sm-2 col-form-label">{{ label }}:</label>
+  <div class="col-md-10">
+    <input type="text" [class.is-invalid]="ngControl.touched && ngControl.invalid" class="form-control" id="{{ label }}"
+    [formControl]="ngControl.control" placeholder="{{ label }}" bsDatepicker [bsConfig]="bsConfig" [maxDate]="maxDate">
+    <div *ngIf="ngControl.invalid && (ngControl.dirty || ngControl.touched)" class="text-danger mt-1">
+     <div class="text-danger" *ngIf="ngControl.control.errors?.required">{{label}} is required</div>
+    </div>
+  </div>
+</div>

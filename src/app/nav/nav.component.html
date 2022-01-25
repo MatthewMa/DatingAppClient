@@ -21,9 +21,10 @@
       </li> -->
     </ul>
     <div class="dropdown ml-auto mr-4" dropdown>
-      <ng-container *ngIf="currentUser$ | async">
-      <a class="dropdown-toggle text-light" dropdownToggle aria-controls="dropdown-basic">Welcome, {{ (currentUser$ | async).userName | titlecase }}<span class="caret"></span></a>
-        <div class="dropdown-menu" id="dropdown-basic" *dropdownMenu role="menu" aria-labelledby="button-basic">
+      <ng-container *ngIf="(currentUser$ | async) as user">
+        <img src="{{ user.photoUrl  ||  './assets/user.png' }}" alt="{{ user.userName }}" class="mr-2">
+        <a class="dropdown-toggle text-light" dropdownToggle aria-controls="dropdown-alignment">Welcome, {{ user.knownAs | titlecase }}<span class="caret"></span></a>
+        <div class="dropdown-menu dropdown-menu-right" id="dropdown-basic" *dropdownMenu role="menu" aria-labelledby="button-alignment">
           <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>

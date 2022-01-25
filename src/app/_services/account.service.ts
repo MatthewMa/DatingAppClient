@@ -36,12 +36,17 @@ export class AccountService {
     this.currentUserSource.next(user);
   }
 
+  setCurrentUserAndLocalStoragte(user: User) {
+    localStorage.setItem(Constants.LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+    this.setCurrentUser(user);
+  }
+
   logout() {
     localStorage.removeItem(Constants.LOCAL_STORAGE_USER_KEY);
     this.currentUserSource.next(null);
   }
 
-  register(account: Register) {
+  register(account: any) {
     return this.http.post(Constants.BASE_URL + Constants.ACCOUNT_REGISTER_URL, account).pipe(map((data:User) => {
       return this.SetUserInLocalStorage(data);
     }));

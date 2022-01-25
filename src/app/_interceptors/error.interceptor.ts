@@ -31,7 +31,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 console.log(modalStateErrors.flat(1));
                 throw modalStateErrors.flat(1);
               } else {
-                this.toastr.error(err.error, err.status);
+                this.toastr.error(err.error);
               }
               break;
             case Constants.STATUS_401_CODE:
