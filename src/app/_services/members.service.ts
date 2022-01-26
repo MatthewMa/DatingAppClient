@@ -1,3 +1,4 @@
+import { LikeParams } from './../_models/like-prams.model';
 import { LikeDto } from './../_models/likedto.model';
 import { Member } from './../_models/member.model';
 import { AccountService } from './account.service';
@@ -15,13 +16,21 @@ import { Constants } from '../_constants/constants';
 export class MembersService {
   members: Member[] = [];
   userParams: UserParams;
+  likeParams: LikeParams;
+  public getLikeParams(): LikeParams {
+    return this.likeParams;
+  }
+  public setLikeParams(value: LikeParams) {
+    this.likeParams = value;
+  }
   user: User;
   memberCache = new Map();
   constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
       this.userParams = new UserParams(user);
-    })
+    });
+    this.likeParams = new LikeParams();
   }
 
   getUserParams() {
@@ -79,7 +88,7 @@ export class MembersService {
     if (this.memberCache.values()) {
       const member = [...this.memberCache.values()]
       .reduce((arr, elem) => arr.concat(elem.result), [])
-      .find((member: Member) => member.username === username);
+      .find((member: Member) => member.userName === username);
       if (member) return of(member);
     }
     return this.http.get<Member>(Constants.BASE_URL + Constants.USER_URL + '/' + username);
@@ -107,8 +116,11 @@ export class MembersService {
     return this.http.post(Constants.BASE_URL + Constants.LIKES_URL + '/' +username, {});
   }
 
-  getLikes(predicate: string = 'liked') {
-    var params = new HttpParams().append(Constants.PREDICATE_PARAM, predicate);
-    return this.http.get(Constants.BASE_URL + Constants.LIKES_URL, { params: params });
+  getLikes(likeParams:LikeParams) {
+    var params = new HttpParams().append(Constants.PREDICATE_PARAM, likeParams.predicate);
+    params = params.append('pageSize', likeParams.pageSize);
+    params = params.append('pageNumber', likeParams.pageNumber);
+    params = params.append('orderBy', likeParams.orderBy);
+    return this.getPaginaterResult<LikeDto[]>(Constants.BASE_URL + Constants.LIKES_URL, params);
   }
 }

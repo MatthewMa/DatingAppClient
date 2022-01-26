@@ -34,7 +34,7 @@
 <hr/>
 <div class="row" *ngIf="(members && members.length > 0); else no_member">
   <div class="col-md-2" *ngFor="let member of members">
-    <app-member-card [memberInput]="member"></app-member-card>
+    <app-member-card [memberInput]="member" [memberMode]="'matches'"></app-member-card>
   </div>
 </div>
 <ng-template #no_member>
@@ -50,6 +50,11 @@
         previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [(ngModel)]="pagination.currentPage"
         *ngIf="pagination.totalItems > pagination.itemsPerPage" (pageChanged)="pageChanged($event)">
     </pagination>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 mt-2 d-flex justify-content-center" *ngIf="pagination">
+    <p>Show&nbsp;&nbsp;<select [(ngModel)]="userParams.pageSize" (change)="loadMembers()"><option>2</option><option>4</option><option>5</option></select>&nbsp; Per Page</p>
   </div>
 </div>
 
