@@ -4,11 +4,11 @@ import { Member } from './../_models/member.model';
 import { AccountService } from './account.service';
 import { User } from 'src/app/_models/user.model';
 import { UserParams } from './../_models/user-params.model';
-import { PaginatedResult } from './../_models/pagination.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, take, map } from 'rxjs';
 import { Constants } from '../_constants/constants';
+import { getPaginaterResult, setParams } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
@@ -52,36 +52,16 @@ export class MembersService {
     if (response) {
       return of(response);
     }
-    let params = this.setParams(userParams.pageNumber, userParams.pageSize);
+    let params = setParams(userParams.pageNumber, userParams.pageSize);
     params = params.append('gender', userParams.gender)
     params = params.append('minAge', userParams.minAge.toString());
     params = params.append('maxAge', userParams.maxAge.toString());
     params = params.append('orderBy', userParams.orderBy);
-    return this.getPaginaterResult<Member[]>(Constants.BASE_URL + Constants.USER_URL, params).pipe(map(response => {
+    return getPaginaterResult<Member[]>(Constants.BASE_URL + Constants.USER_URL, params, this.http).pipe(map(response => {
       // Set to memberCache
       this.memberCache.set(Object.values(this.userParams).join('-'), response);
       return response;
     }));
-  }
-
-  private getPaginaterResult<T>(url: string, params: HttpParams) {
-    const paginatedResult: PaginatedResult<T> = new PaginatedResult();
-    return this.http.get<T>(url, { observe: 'response', params }).pipe(
-      map(response => {
-        paginatedResult.result = response.body;
-        if (response.headers.get('Pagination') !== null) {
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
-        return paginatedResult;
-      })
-    );
-  }
-
-  private setParams(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
-    params = params.append('pageNumber', pageNumber.toString());
-    params = params.append('pageSize', pageSize.toString());
-    return params;
   }
 
   getMemberByUserName(username: string) {
@@ -121,6 +101,6 @@ export class MembersService {
     params = params.append('pageSize', likeParams.pageSize);
     params = params.append('pageNumber', likeParams.pageNumber);
     params = params.append('orderBy', likeParams.orderBy);
-    return this.getPaginaterResult<LikeDto[]>(Constants.BASE_URL + Constants.LIKES_URL, params);
+    return getPaginaterResult<LikeDto[]>(Constants.BASE_URL + Constants.LIKES_URL, params, this.http);
   }
 }

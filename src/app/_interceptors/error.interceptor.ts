@@ -5,15 +5,16 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpClient
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError, retry, take } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private toastr: ToastrService) {}
+  constructor(private router: Router, private toastr: ToastrService, private http: HttpClient) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -43,13 +44,11 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.router.navigate(['/not-found']);
               break;
             case Constants.STATUS_500_CODE:
-              console.log(err.error);
               const navigationExtras: NavigationExtras = { state: { error: err.error } };
               this.router.navigate(['/server-error'], navigationExtras);
               break;
             default:
               this.toastr.error('Something unexpected went wrong');
-              console.log(err);
               break;
           }
         }

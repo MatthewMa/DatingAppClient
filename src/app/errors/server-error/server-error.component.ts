@@ -10,7 +10,6 @@ export class ServerErrorComponent implements OnInit {
   error: any;
   constructor(private router: Router) {
     this.error = this.router.getCurrentNavigation()?.extras?.state?.error
-    console.log(this.router.getCurrentNavigation());
    }
 
   ngOnInit(): void {

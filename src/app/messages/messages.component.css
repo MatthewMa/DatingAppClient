@@ -1,0 +1,9 @@
+.img-circle {
+  max-height: 45px;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
