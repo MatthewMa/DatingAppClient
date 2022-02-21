@@ -1,78 +1,17 @@
 <form [formGroup]='registerForm' (ngSubmit)="registerForm.valid && register()" autocomplete="off">
   <h2 class="text-center text-default">Sign Up</h2><hr/>
-  <!-- <div class="form-group row mt-2">
-    <label for="username" class="col-sm-2 col-form-label">User Name:</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="username"
-      placeholder="User Name:" formControlName="username"
-      required maxlength="16" minlength="4" [class.is-invalid]="registerForm.get('username').errors && registerForm.get('username').touched">
-      <div *ngIf="registerForm.get('username').invalid && (registerForm.get('username').dirty || registerForm.get('username').touched)" class="text-danger mt-1">
-        <div *ngIf="registerForm.get('username').errors.required">
-          Please enter username
-        </div>
-      </div>
-      <div *ngIf="registerForm.get('username').invalid && (registerForm.get('username').dirty || registerForm.get('username').touched)" class="text-danger mt-1">
-        <div *ngIf="registerForm.get('username').errors.maxlength || registerForm.get('username').errors.minlength">
-          Username should be between 4 and 16 in length
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="password" class="col-sm-2 col-form-label">Password:</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="password" placeholder="Password:" formControlName="password" required
-      [pattern]="'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,16}$'" [class.is-invalid]="registerForm.get('password').errors && registerForm.get('password').touched">
-      <div *ngIf="registerForm.get('password').invalid && (registerForm.get('password').dirty || registerForm.get('password').touched)" class="text-danger mt-1">
-        <div *ngIf="registerForm.get('password').errors.required">
-          Please enter password
-        </div>
-      </div>
-      <div *ngIf="registerForm.get('password').invalid && (registerForm.get('password').dirty || registerForm.get('password').touched)" class="text-danger mt-1">
-        <div *ngIf="registerForm.get('password').errors.pattern">
-          <p>Password is not valid:</p>
-          <ul>
-            <li>At least one upper case English letter</li>
-            <li>At least one lower case English letter</li>
-            <li>At least one digit</li>
-            <li>At least one special character</li>
-            <li>Minimum eight in length and maximum is 16 in length</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <label for="passwordconfirm" class="col-sm-2 col-form-label">Confirm Password:</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="passwordconfirm" placeholder="Confirm Password:"
-      formControlName="passwordconfirm" required [class.is-invalid]="registerForm.get('passwordconfirm').errors && registerForm.get('passwordconfirm').touched">
-      <div *ngIf="registerForm.get('passwordconfirm').invalid && (registerForm.get('passwordconfirm').dirty || registerForm.get('passwordconfirm').touched)" class="text-danger mt-1">
-        <div class="text-danger" *ngIf="registerForm.get('passwordconfirm').hasError('required')">
-          Confirm password is required
-        </div>
-      </div>
-      <div *ngIf="registerForm.get('passwordconfirm').invalid && (registerForm.get('passwordconfirm').dirty || registerForm.get('passwordconfirm').touched)" class="text-danger mt-1">
-        <div class="text-danger" *ngIf="registerForm.get('passwordconfirm').hasError('isMatching')">
-          Confirm Password must match password
-        </div>
-      </div>
-    </div>
-  </div>-->
   <div class="form-group row mt-2">
     <label class="control-label col-md-2">Gender:</label>
     <div class="col-md-10">
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="male" checked>
-        <label class="form-check-label">
+        <input class="form-check-input" type="radio" value="male" checked id="male" name="gender">
+        <label class="form-check-label" for="male">
           Male
         </label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" value="female">
-        <label class="form-check-label">
+        <input class="form-check-input" type="radio" value="female" id="female" name="gender">
+        <label class="form-check-label" for="female">
           Female
         </label>
       </div>

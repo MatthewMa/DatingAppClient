@@ -2,7 +2,8 @@ import { environment } from './../../environments/environment';
 export class Constants {
   public static readonly BASE_URL = environment.apiUrl;
   public static readonly USER_URL = 'users';
-  public static readonly MESSAGE_URL = 'messages'
+  public static readonly MESSAGE_URL = 'messages';
+  public static readonly ADMIN_URL = 'admin';
   public static readonly ACCOUNT_LOGIN_URL = 'account/login';
   public static readonly ACCOUNT_REGISTER_URL = 'account/register';
   public static readonly PHOTO_UPLOAD_URL = "users/add-photo";
@@ -16,4 +17,5 @@ export class Constants {
   public static readonly STATUS_401_CODE = 401;
   public static readonly STATUS_404_CODE = 404;
   public static readonly STATUS_500_CODE = 500;
+  public static readonly ROLES = ['Admin', 'Moderator', 'Member'];
 }

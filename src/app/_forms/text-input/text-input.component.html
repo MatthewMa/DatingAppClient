@@ -1,7 +1,7 @@
 <div class="form-group row">
   <label for="{{label}}" class="col-sm-2 col-form-label">{{ label }}:</label>
   <div class="col-sm-10">
-    <input [type]="type" class="form-control" id="{{label}}" placeholder="{{label}}"
+    <input [type]="type" class="form-control" id="{{label}}" placeholder="{{label}}" autocomplete="off"
     required [class.is-invalid]="ngControl.invalid && ngControl.touched" [formControl]="ngControl.control" [class.is-valid]="ngControl.valid && ngControl.touched">
     <div *ngIf="ngControl.invalid && (ngControl.dirty || ngControl.touched)" class="text-danger mt-1">
       <div class="text-danger" *ngIf="ngControl.control.hasError('isMatching')">

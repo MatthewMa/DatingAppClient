@@ -41,7 +41,8 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.toastr.error(Constants.UNAUTHORIZED_TEXT, err.status);
               break;
             case Constants.STATUS_404_CODE:
-              this.router.navigate(['/not-found']);
+              // this.router.navigate(['/not-found']);
+              this.toastr.error(err.status);
               break;
             case Constants.STATUS_500_CODE:
               const navigationExtras: NavigationExtras = { state: { error: err.error } };

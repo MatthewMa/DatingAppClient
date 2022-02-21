@@ -15,6 +15,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['/messages']">Messages</a>
         </li>
+        <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/admin']">Admin</a>
+        </li>
       </ng-container>
       <!-- <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" [routerLink]="['/errors']">Errors</a>
@@ -23,7 +26,7 @@
     <div class="dropdown ml-auto mr-4" dropdown>
       <ng-container *ngIf="(currentUser$ | async) as user">
         <img src="{{ user.photoUrl  ||  './assets/user.png' }}" alt="{{ user.userName }}" class="mr-2">
-        <a class="dropdown-toggle text-light" dropdownToggle aria-controls="dropdown-alignment">Welcome, {{ user.knownAs | titlecase }}<span class="caret"></span></a>
+        <a class="dropdown-toggle text-light" dropdownToggle aria-controls="dropdown-alignment">Welcome, {{ user.knownAs || user.userName | titlecase }}<span class="caret"></span></a>
         <div class="dropdown-menu dropdown-menu-right" id="dropdown-basic" *dropdownMenu role="menu" aria-labelledby="button-alignment">
           <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
           <div class="dropdown-divider"></div>

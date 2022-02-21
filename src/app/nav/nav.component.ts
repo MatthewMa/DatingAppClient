@@ -1,5 +1,5 @@
 import { AccountService } from './../_services/account.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { stringify } from 'querystring';
 import { User } from '../_models/user.model';
@@ -14,8 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NavComponent implements OnInit {
   currentUser$: Observable<User>;
-  constructor(private accountService: AccountService, private router: Router, private route: ActivatedRoute,
-    private toastr: ToastrService) { }
+  constructor(private accountService: AccountService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.currentUser$ = this.accountService.currentUser$;

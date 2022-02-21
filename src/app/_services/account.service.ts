@@ -13,10 +13,6 @@ export class AccountService {
   currentUser$ = this.currentUserSource.asObservable();
   constructor(private http: HttpClient) { }
 
-  getUsers() {
-    return this.http.get(Constants.BASE_URL + Constants.USER_URL)
-  }
-
   login(data: {username: string, password: string}) {
     return this.http.post(Constants.BASE_URL + Constants.ACCOUNT_LOGIN_URL, data).pipe(map((data: User) => {
       return this.SetUserInLocalStorage(data);
@@ -25,6 +21,13 @@ export class AccountService {
 
   private SetUserInLocalStorage(data: User) {
     const user = data;
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    if (Array.isArray(roles)) {
+      user.roles = roles;
+    } else {
+      user.roles.push(roles);
+    }
     if (user) {
       localStorage.setItem(Constants.LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
       this.setCurrentUser(user);
@@ -37,6 +40,13 @@ export class AccountService {
   }
 
   setCurrentUserAndLocalStoragte(user: User) {
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    if (Array.isArray(roles)) {
+      user.roles = roles;
+    } else {
+      user.roles.push(roles);
+    }
     localStorage.setItem(Constants.LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
     this.setCurrentUser(user);
   }
@@ -50,5 +60,9 @@ export class AccountService {
     return this.http.post(Constants.BASE_URL + Constants.ACCOUNT_REGISTER_URL, account).pipe(map((data:User) => {
       return this.SetUserInLocalStorage(data);
     }));
+  }
+
+  getDecodedToken(token) {
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }

@@ -2,7 +2,6 @@ import { AccountService } from './../_services/account.service';
 import { Register } from './../_models/register.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,11 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerModel: Register;
-  // @ViewChild('registerForm', {static: true}) registerForm: NgForm;
   registerForm: FormGroup;
   maxDate: Date;
   validationErrors: string[];
-  constructor(private accountService: AccountService, private toastr: ToastrService, private router: Router,
+  constructor(private accountService: AccountService, private router: Router,
     private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -24,6 +22,7 @@ export class RegisterComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
+
 
   initializeForm() {
     this.registerForm = this.fb.group({

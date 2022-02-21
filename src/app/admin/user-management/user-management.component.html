@@ -1,0 +1,14 @@
+<div class="row">
+  <table class="table table-striped table-hover">
+    <tr>
+      <th style="width: 30%;">Username</th>
+      <th style="width: 40%;">Roles</th>
+      <th style="width: 30%;">Operation</th>
+    </tr>
+    <tr *ngFor="let user of userWithRoles; let i = index;">
+      <th style="width: 30%;">{{ user.userName }}</th>
+      <th style="width: 40%;">{{ user.roles?.join(', ') | uppercase }}</th>
+      <th style="width: 30%;"><button class="btn btn-primary" (click)="openModal(i)">Edit Roles</button></th>
+    </tr>
+  </table>
+</div>
